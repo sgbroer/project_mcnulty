@@ -1,0 +1,144 @@
+<html>
+
+<body>
+<fieldset>
+  <legend>
+    Political Engagement Predictor
+  </legend>
+
+  Age:
+  <br>
+  <input type='number' id='age'>
+  <br>
+  Income:
+  <br>
+    <select id='income'>
+      <option value=1>Under $10k</option>
+      <option value=2>$10-20k</option>
+      <option value=3>$20-30k</option>
+      <option value=4>$30-40k</option>
+      <option value=5>$40-50k</option>
+      <option value=6>$50-75k</option>
+      <option value=7>$75-100k</option>
+      <option value=8>$100-150k</option>
+      <option value=9>$150k+</option>
+    </select>
+  <br>
+  Education:
+  <br>
+    <select id='educ'>
+      <option value=1>Less than high school</option>
+      <option value=2>High school incomplete</option>
+      <option value=3>High school graduate</option>
+      <option value=4>Some college, no degree</option>
+      <option value=5>Two year associates degree</option>
+      <option value=6>Bachelor's or other 4-year degree</option>
+      <option value=7>Some postgraduate schooling, no degree</option>
+      <option value=8>Postgraduate or professional degree</option>
+    </select>
+  <br>
+  Vote frequency:
+  <br>
+    <select id='oftvote'>
+      <option value=1>Always</option>
+      <option value=2>Nearly always</option>
+      <option value=3>Part of the time</option>
+      <option value=4>Seldom</option>
+      <option value=5>Never</option>
+    </select>
+  <br>
+  Ecnomic Inequality:
+  <br>
+    <select id='econ_ineq'>
+      <option value=1>A very big problem</option>
+      <option value=2>A moderately big problem</option>
+      <option value=3>A small problem</option>
+      <option value=4>Not a problem at all</option>
+    </select>
+  <br>
+  </fieldset>
+  <br>
+  <fieldset>
+    <div>
+      <button id='submit'>Make prediction</button>
+    </div>
+  <br>
+    My model predicts:
+    <table>
+      <tr><td>You are</td><td id='hard_predict'></td></tr>
+      <tr><td>With </td><td id='soft_predict'></td></tr>
+    </table>
+</fieldset>
+</body>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+
+  $('#submit').click( () => { cool(); } );
+
+  function cool(){
+    let features = {
+     'income': $('#income').val(),
+     'educ': $('#educ').val(),
+     'oftvote': $('#oftvote').val(),
+     'age': $('#age').val(),
+     'retired': 0,
+     'student': 0,
+     'employed': 0,
+     'sav': 0,
+     'econ_ineq': $('#econ_ineq').val(),
+     'int_con_1': 0,
+     'local_1': 0,
+     'glob_econ_1': 0,
+     'econ_unf_1': 0,
+     'pol_comp_1': 0,
+     'clear_sol_1': 0,
+     'sex_1': 0,
+     'white': 0,
+     'wlack': 0,
+     'asian': 0,
+     'race_other': 0,
+     'native': 0,
+     'protestant': 0,
+     'roman Catholic': 0,
+     'mormon': 0,
+     'orth Chr': 0,
+     'jewish': 0,
+     'muslim': 0,
+     'buddhist': 0,
+     'hindu': 0,
+     'atheist': 0,
+     'agnostic': 0,
+     'relig_Other': 0,
+     'nothing': 0,
+     'christian': 0,
+     'unitarian': 0,
+     'republican': 0,
+     'democrat': 0,
+     'independent': 0,
+     'party_none': 0,
+     'party_other': 0}
+
+    console.log(features);
+
+    $.ajax({
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      url: "/predict",  // Replace with URL of POST handler
+      dataType: "json",
+      async: true,
+      data: JSON.stringify(features),
+      success: (result) => {
+        $('#hard_predict').html(result['prediction'] ? 'paying more attention to poitics since the 2016 election.' : 'not paying more attention to poitics since the 2016 election.');
+        $('#soft_predict').html(result['prob_engaged']*100 + '% probability.');
+      },
+      error: (result) => {
+        alert('You dun messed up now. Did you input your age?')
+        /*
+        function to run with returned object
+        from your POST request if there was a failure
+        */
+      }
+    })
+  }
+  </script>
+</html>
