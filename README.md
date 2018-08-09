@@ -26,7 +26,7 @@ I decided to do some further tuning on the support vector machine and the logist
 ### Results
 After running a grid search to identify optimal parameters, I generated a learning curve to compare them:
 
-![text](learning_curves.png "Learning Curves")
+![text](Learning_Curves.png "Learning Curves")
 
 Clearly the logistic regression was too constricted to handle the complexity of the data, but the support vector machine shows a promising trend with the training scores evening out and the test scores continuing to get better.
 
