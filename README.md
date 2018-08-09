@@ -39,7 +39,7 @@ Test | 56% | 54% | 72%
 
 Not too bad! In order to get a better sense of what was going on with the model, I built a simple web app to allow input of a few features to generate a prediction. I chose these features using the random forest's feature importance, and playing with them did seem to allow for a range of prediction and confidence. Here's a screenshot to get a sense of the app.
 
-![text](flask_screenshot.png "Flask Web App"
+![text](flask_screenshot.png "Flask Web App")
 
 ### Conclusions + Next Steps
 This project is a promising first step toward the stated goal of providing a simple tool to identify those who are paying more attention in response to the 2016 election in order to reach out and engage them. In order to improve it, I would like to go back and do a more methodical process of feature selection on the initial 164 questions to see if I could come up with a better list of questions. Additionally, it would be ideal to gather more data beyond this single Pew research survey. As mentioned before, the learning curve above suggests that adding more data would continue to improve the model. As such, I would like to build the capacity into the web app to confirm or refute it's prediction for those filling it out, so it could incorporate that data for further improvements. 
